@@ -92,6 +92,6 @@ docker-compose -f docker/docker-compose.yml up --build
 
 ---
 
-Réalisé par : **\[Ton nom]**
+Réalisé par : [**LILJOKER06**](https://github.com/liljoker06)
 TP "Architecture logicielle & clusters SGBD" – **Projet DevOps**
 Année 2024-2025
