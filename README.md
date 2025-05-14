@@ -15,16 +15,19 @@ Cette application permet la réservation de places pour des événements (concer
 ## 🧱 Architecture choisie
 
 * **Monolithe modulaire** avec **Clean Architecture**
-* Découpé en modules : `Event`, `Reservation`, `User`, etc.
+* Backend décomposé en : `config`, `controllers`, `models`, `routes`, `services`, `utils`
+* Frontend décomposé en : `components`, `pages`, `routes`, `layouts`
+* Navbar adaptée dynamiquement selon le rôle (user / admin)
 * Déploiement via **Docker Compose** (frontend, backend, cluster DB)
 
 ## 🌐 Technologies
 
-* **Frontend** : Vite.js + React
-* **Backend** : Node.js (Express ou Clean Arch modulaire)
+* **Frontend** : Vite.js + React + Tailwind CSS v4
+* **Backend** : Node.js (Express), architecture modulaire
 * **BDD** : MariaDB Galera Cluster (3 nœuds)
 * **Conteneurisation** : Docker & Docker Compose
-* (Optionnel) **CI/CD** : GitHub Actions ou scripts Bash
+* **Logs** : `winston` avec date + niveau + emoji
+* **Token** : Authentification JWT (avec rôles `user` et `admin`)
 
 ## 📁 Structure du projet
 
@@ -39,12 +42,23 @@ reservation-app/
 │   │   ├── services/
 │   │   ├── utils/
 │   │   └── main.js
+│   ├── sql/schema.sql
 │   ├── .env
 │   ├── Dockerfile
 │   └── package.json
 ├── frontend/
 │   ├── src/
-│   └── vite.config.js
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── routes/
+│   │   ├── layouts/
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   ├── Dockerfile
+│   └── package.json
 ├── docker/
 │   └── docker-compose.yml
 └── README.md
@@ -72,27 +86,30 @@ docker-compose -f docker/docker-compose.yml up --build
 
 ## ✅ Fonctionnalités clés
 
-* Réservation de places avec vérification transactionnelle
-* Taux de remplissage mis à jour en temps réel
-* Tarification dynamique possible (module futur)
-* Tolérance aux pannes : cluster Galera avec test de bascule
+* Authentification simulée avec JWT (connexion sans mot de passe)
+* Rôle `admin` (création événements) vs `user` (réservation)
+* Réservation avec vérification du nombre de places restantes
+* Accès à ses propres réservations pour l'utilisateur
+* Vue globale des réservations d'un événement pour l'admin
+* Suppression de réservations par l'admin
+* Navbar dynamique selon rôle connecté
 
-## 🧪 Tests
+## 🧲 Tests
 
-* Tests unitaires sur les couches `domain` et `use_cases`
-* Tests d’intégration backend
-* Test du failover MariaDB (via `docker stop` sur un nœud)
+* Tests unitaires backend (models / controllers)
+* Tests d'intégration (API Express)
+* Test du failover Galera (`docker stop` d'un nœud MariaDB)
 
-## 📚 ADRs et documentation
+## 📙 ADRs et documentation
 
 * Tous les choix d’architecture sont documentés dans `/backend/docs/adr`
 * Diaporama de présentation prévu pour la démo finale
 
-## 🧰 DevOps – Bonus
+## 🛠️ DevOps – Bonus
 
-* Possibilité d’ajouter un script CI/CD (GitHub Actions, Bash)
-* Suivi des logs avec `pino` ou `winston`
-* Monitoring Docker ou Prometheus (facultatif mais valorisable)
+* Possibilité d’ajouter CI/CD avec GitHub Actions
+* Logger customisé (`utils/logger.js`)
+* Monitoring Docker ou Prometheus (optionnel)
 
 ---
 
