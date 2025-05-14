@@ -32,12 +32,16 @@ Cette application permet la réservation de places pour des événements (concer
 reservation-app/
 ├── backend/
 │   ├── src/
-│   │   ├── domain/
-│   │   ├── use_cases/
-│   │   ├── infrastructure/
-│   │   ├── interfaces/
-│   │   └── config/
-│   └── main.js
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── main.js
+│   ├── .env
+│   ├── Dockerfile
+│   └── package.json
 ├── frontend/
 │   ├── src/
 │   └── vite.config.js
