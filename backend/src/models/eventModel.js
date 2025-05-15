@@ -1,13 +1,14 @@
 import db from '../config/db.js'
 
 // réer un nouvel événement
-export const createEvent = async (title, date, total_seats) => {
+export const createEvent = async (title, date, location, total_seats) => {
   const [result] = await db.query(
-    'INSERT INTO events (title, date, total_seats) VALUES (?, ?, ?)',
-    [title, date, total_seats]
+    'INSERT INTO events (title, date, location, total_seats, img_url) VALUES (?, ?, ?, ?, ?)',
+    [title, date, location, total_seats, '']  
   )
   return result.insertId
 }
+
 
 // Récupérer tous les événements
 export const getAllEvents = async () => {
@@ -34,3 +35,9 @@ export const getRemainingSeats = async (eventId) => {
 
   return event?.remaining ?? 0
 }
+
+
+export const updateEventImage = async (eventId, img_url) => {
+  await db.query('UPDATE events SET img_url = ? WHERE id = ?', [img_url, eventId])
+}
+

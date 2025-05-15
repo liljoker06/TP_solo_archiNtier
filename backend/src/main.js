@@ -14,9 +14,16 @@ dotenv.config()
 
 const app = express()
 
+import path from 'path'
+
+
+
+
+
 // Middlewares
 app.use(cors())
 app.use(express.json())
+app.use('/uploads', express.static(path.resolve('uploads')))
 
 // Test DB connection
 const connectDB = async () => {

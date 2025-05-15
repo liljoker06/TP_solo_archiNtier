@@ -1,6 +1,13 @@
-import axiosInstance from './axiosInstance' 
+import axiosInstance from './axiosInstance'
 
-export const createEvent = async (eventData) => {
-  const response = await axiosInstance.post('/events', eventData)
+export const createEvent = async (formData) => {
+  const response = await axiosInstance.post('/events/', formData)
+  return response.data
+}
+
+
+
+export const fetchEvents = async () => {
+  const response = await axiosInstance.get('/events/')
   return response.data
 }
