@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Plus, Calendar, MapPin, Trash2 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { Motion } from 'framer-Motion'
 import { useNavigate } from 'react-router-dom'
 import { fetchEvents, deleteEvent } from '../services/eventService' // <-- ajoute deleteEvent
 import CanvasBackground from '../components/CanvasBackground'
@@ -44,7 +44,7 @@ export default function AdminEvents() {
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Événements</h1>
-          <motion.button
+          <Motion.button
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate('/create-event')}
@@ -52,7 +52,7 @@ export default function AdminEvents() {
           >
             <Plus className="w-5 h-5 animate-pulse" />
             <span className="hidden sm:inline">Ajouter</span>
-          </motion.button>
+          </Motion.button>
         </div>
 
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
