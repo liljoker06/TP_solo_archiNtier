@@ -167,22 +167,17 @@ Voici un cas d'utilisation présenté sous forme de mini tutoriel illustré avec
    * Il peut cliquer sur "Réserver" pour participer à un événement.
    * ![Interface Utilisateur](./images/screen_user_home.png)
 
-3. **Réservation d’un événement**
 
-   * Après avoir cliqué sur un événement, l’utilisateur accède à la fiche détaillée de l’événement.
-   * Il peut y confirmer sa réservation (si des places sont encore disponibles).
-   * ![Réservation](./images/screen_event_detail.png)
-
-4. **Interface administrateur (admin)**
+3. **Interface administrateur (admin)**
 
    * Un administrateur accède à une interface différente après connexion.
    * Il peut créer de nouveaux événements et voir le taux de remplissage.
    * ![Interface Admin](./images/screen_admin_dashboard.png)
 
-5. **Liste des réservations (admin)**
+4. **Liste des évenements (admin)**
 
-   * L'administrateur peut également voir toutes les réservations effectuées sur un événement spécifique.
-   * ![Liste Réservations](./images/screen_admin_reservations.png)
+   * L'administrateur peut également voir toutes les  événements spécifique et supprimer.
+   * ![Liste Révénements](./images/screen_admin_evenement.png)
 
 ---
 
