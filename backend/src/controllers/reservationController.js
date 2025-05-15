@@ -2,26 +2,27 @@ import { createReservation, getRemainingSeats, getReservationsByUser, getReserva
 
 export const createReservationHandler = async (req, res) => {
   try {
-    const { eventId, quantity } = req.body
+    const { event_id, quantity } = req.body
     const userId = req.user?.id
 
-    if (!eventId || !quantity || !userId) {
-      return res.status(400).json({ error: 'Champs requis : eventId, quantity (auth nécessaire)' })
+    if (!event_id || !quantity || !userId) {
+      return res.status(400).json({ error: 'Champs requis : event_id, quantity (auth nécessaire)' })
     }
 
-    const remaining = await getRemainingSeats(eventId)
+    const remaining = await getRemainingSeats(event_id)
 
     if (quantity > remaining) {
       return res.status(400).json({ error: `Seulement ${remaining} place(s) disponible(s)` })
     }
 
-    const reservationId = await createReservation(userId, eventId, quantity)
+    const reservationId = await createReservation(userId, event_id, quantity)
 
     res.status(201).json({ message: 'Réservation confirmée', reservationId })
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur', details: error.message })
   }
 }
+
 
 // Liste des réservations d'un utilisateur (auth nécessaire)
 export const getUserReservationsHandler = async (req, res) => {

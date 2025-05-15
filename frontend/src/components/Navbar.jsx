@@ -43,7 +43,7 @@ export default function Navbar() {
   const navItems = [
     { name: 'Accueil', path: '/' },
     // { name: 'Événements', path: '/events' },
-    { name: 'Réservations', path: '/reservation' },
+    { name: 'Réservations', path: '/my-reservations' },
     { name: 'FAQ', path: '/faq' },
   ]
 
