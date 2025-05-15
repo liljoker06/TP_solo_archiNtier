@@ -42,14 +42,12 @@ export default function Navbar() {
 
   const navItems = [
     { name: 'Accueil', path: '/' },
-    // { name: 'Événements', path: '/events' },
     { name: 'Réservations', path: '/my-reservations' },
     { name: 'FAQ', path: '/faq' },
   ]
 
   const adminItems = [
     { name: 'Gérer les événements', path: '/admin/events' },
-    { name: 'Gérer les utilisateurs', path: '/admin/users' },
   ]
 
   const linkClasses = ({ isActive }) =>

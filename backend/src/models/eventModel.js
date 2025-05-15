@@ -41,3 +41,8 @@ export const updateEventImage = async (eventId, img_url) => {
   await db.query('UPDATE events SET img_url = ? WHERE id = ?', [img_url, eventId])
 }
 
+
+
+export const deleteEvent = async (eventId) => {
+  await db.query('DELETE FROM events WHERE id = ?', [eventId])
+}

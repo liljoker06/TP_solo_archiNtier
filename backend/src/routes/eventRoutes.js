@@ -1,5 +1,5 @@
 import express from 'express'
-import { createEventHandler, getAllEventsHandler } from '../controllers/eventController.js'
+import { createEventHandler, getAllEventsHandler, deleteEventHandler } from '../controllers/eventController.js'
 import { checkAuth, checkAdmin } from '../middlewares/auth.js'
 import { upload } from '../middlewares/upload.js'
 
@@ -10,5 +10,8 @@ router.get('/', getAllEventsHandler)
 
 // Admin uniquement : créer un événement (avec upload image)
 router.post('/', checkAuth, checkAdmin, upload.single('image'), createEventHandler)
+
+// Admin uniquement : Supprimer un événement
+router.delete('/:id', checkAuth, checkAdmin, deleteEventHandler)
 
 export default router

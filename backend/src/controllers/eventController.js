@@ -1,4 +1,4 @@
-import { createEvent, getAllEvents, getRemainingSeats, updateEventImage  } from '../models/eventModel.js'
+import { createEvent, getAllEvents, getRemainingSeats, updateEventImage, deleteEvent  } from '../models/eventModel.js'
 import fs from 'fs'
 import path from 'path'
 
@@ -57,6 +57,28 @@ export const getAllEventsHandler = async (req, res) => {
     )
 
     res.status(200).json(eventsWithAvailability)
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur serveur', details: error.message })
+  }
+}
+
+
+
+// Supprimer un événement (admin uniquement)
+export const deleteEventHandler = async (req, res) => {
+  try {
+    const eventId = req.params.id
+
+    // Suppression du dossier d'images
+    const folderPath = `uploads/events/${eventId}`
+    if (fs.existsSync(folderPath)) {
+      fs.rmSync(folderPath, { recursive: true, force: true })
+    }
+
+    // Suppression en BDD
+    await deleteEvent(eventId)
+
+    res.status(200).json({ message: 'Événement supprimé avec succès' })
   } catch (error) {
     res.status(500).json({ error: 'Erreur serveur', details: error.message })
   }

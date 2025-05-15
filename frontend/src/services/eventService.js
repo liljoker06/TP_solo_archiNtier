@@ -26,3 +26,10 @@ export const getMyReservations = async () => {
   const response = await axiosInstance.get('/reservations')
   return response.data
 }
+
+
+//supprime une réservation
+export const deleteEvent = async (eventId) => {
+  const response = await axiosInstance.delete(`/events/${eventId}`)
+  return response.data
+}
