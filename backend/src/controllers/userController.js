@@ -5,7 +5,7 @@ import { registerUser, findUserByEmail } from '../models/userModel.js'
 const JWT_SECRET = process.env.JWT_SECRET
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
 
-// ▶️ Inscription
+//Inscription
 export const registerHandler = async (req, res) => {
   try {
     const { name, email, password, role } = req.body
@@ -55,7 +55,7 @@ export const loginHandler = async (req, res) => {
         role: user.role
       },
       JWT_SECRET,
-      { expiresIn: JWT_EXPIRES_IN }
+      {  expiresIn: '2h'  }
     )
 
     res.status(200).json({
@@ -66,3 +66,15 @@ export const loginHandler = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur', details: error.message })
   }
 }
+
+
+
+export const checkUserRole = async (req, res) => {
+  try {
+    const { id, email, role } = req.user 
+    res.json({ id, email, role })
+  } catch (err) {
+    res.status(500).json({ error: 'Erreur serveur' })
+  }
+}
+
