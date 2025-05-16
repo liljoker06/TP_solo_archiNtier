@@ -2,97 +2,122 @@
 
 ## ✨ Description du projet
 
-Cette application permet la réservation de places pour des événements (concerts, conférences, expositions) dans un domaine fonctionnel simple mais avec une contrainte métier forte : la gestion en temps réel du taux de remplissage des événements. Le backend est développé en Node.js avec Express, et le frontend en React (Vite.js). La base de données MariaDB est configurée en cluster Galera pour assurer la haute disponibilité et la résilience des données.
+Cette application permet la réservation de places pour des événements (concerts, conférences, expositions) avec gestion en temps réel du taux de remplissage. Le backend est développé en Node.js avec Express, le frontend en React (Vite.js), et la base de données est une instance MariaDB configurée en cluster Galera. Le projet est entièrement dockerisé.
 
 ---
 
 ## 📌 Contexte et exigences du TP
 
-* Créer une application de réservation de places pour des événements ou domaine équivalent.
-* Intégrer une contrainte métier rendant le projet intéressant d’un point de vue architectural (ex : mise à jour temps-réel du taux de remplissage).
-* Mettre en cluster MariaDB (Galera) pour la haute disponibilité.
-* Aucune architecture imposée, il faut justifier son choix.
+* Application de réservation de places pour des événements.
+* Contrainte métier : gestion en temps réel du taux de remplissage.
+* Cluster Galera pour MariaDB : haute disponibilité.
+* Justification de l'architecture (libre).
 
 ---
 
 ## 🧠 Objectifs pédagogiques
 
-| Thème                | Ce que l’on attend                                                                 |
-| -------------------- | ---------------------------------------------------------------------------------- |
-| Choix d’architecture | Définir et argumenter la solution (diagrammes, compromis, limites)                 |
-| KISS                 | Contrôler la complexité (code clair, cyclomatic complexity raisonnable)            |
-| DDD                  | Définir bounded-contexts, agrégats, événements de domaine, vocabulaire ubiquitaire |
-| TDD                  | Pratiquer tests d’acceptation, unitaires, contrats si pertinent                    |
-| SOLID                | Montrer la concrétisation dans au moins un volet du projet                         |
-| Clusters DB          | Mettre en place cluster MariaDB (Galera), valider la haute dispo (tests failover)  |
+| Thème                | Attendus                                               |
+| -------------------- | ------------------------------------------------------ |
+| Choix d'architecture | Définir et argumenter (diagrammes, compromis, limites) |
+| KISS                 | Code simple et lisible                                 |
+| DDD                  | Définition des contextes métiers, entités, agrégats    |
+| TDD                  | Tests d'acceptation, unitaires ou de contrat           |
+| SOLID                | Application concrète d'au moins un principe            |
+| Clusters DB          | Cluster Galera + tests de bascule (failover)           |
 
 ---
 
 ## 🛡️ Architecture choisie
 
-Nous avons choisi d'utiliser **exclusivement la Clean Architecture** pour structurer l'ensemble du backend. Ce choix permet une organisation claire, une forte testabilité, ainsi qu'une facilité de maintenance et d'évolution.
+**Clean Architecture** : organisée autour de cas d'usages et d'entités métier, facilitant évolutions et tests.
 
 ### 🔧 Principes appliqués
 
-* **KISS** : chaque module reste simple et orienté vers une unique responsabilité.
-* **DDD** : les entités et cas d'usage sont regroupés par contexte métier.
-* **SOLID** : architecture modulaire avec découplage fort entre les couches.
-* **TDD** : les tests sont écrits dès la définition des comportements attendus.
+* **KISS** : responsabilités claires et modules simples.
+* **DDD** : logique métier bien délimitée.
+* **SOLID** : couplage faible entre couches.
+* **TDD** : tests à chaque niveau (logique, intégration, API).
 
-### 📚 Organisation Clean Architecture
+### 📚 Organisation des dossiers (Clean Archi)
 
-* **Domain** : entités métier pures, sans dépendances techniques.
-* **Application** : cas d'usage métier (ex : créer une réservation, vérifier disponibilité).
-* **Infrastructure** : interactions techniques (base de données, JWT, etc.).
-* **Interface / Controllers** : API HTTP (Express) et validation des entrées.
-
-Cette architecture favorise une haute cohésion interne et une faible couplage entre modules. Elle est idéale pour un projet évolutif avec des contraintes de résilience, comme l'utilisation d'un cluster MariaDB Galera.
+* **domain** : entités et logiques métier
+* **application** : cas d’usages (création, réservation)
+* **infrastructure** : accès BDD, JWT, logs
+* **interface** : routes Express, contrôleurs
 
 ---
 
-## 📁 Structure du projet
-
-Voici l'organisation des fichiers côté frontend et backend :
+## 📁 Structure du projet (avec Docker)
 
 ```
 TP_SOLO_ARCHINTIER/
 ├── backend/
-│   ├── logs/
-│   ├── node_modules/
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── sql/
-│   │   ├── utils/
-│   │   └── main.js
+│   ├── Dockerfile
 │   ├── .env
 │   ├── package.json
-│   └── package-lock.json
+│   ├── src/
+│   └── ...
 │
 ├── frontend/
-│   ├── node_modules/
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── routes/
-│   │   ├── services/
-│   │   ├── App.jsx
-│   │   ├── index.css
-│   │   └── main.jsx
+│   ├── Dockerfile
 │   ├── .env
-│   ├── index.html
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
-│   ├── vite.config.js
 │   ├── package.json
-│   └── package-lock.json
+│   └── src/
+│
+├── docker-compose.yml
+├── .env
+├── images/
+└── README.md
 ```
+
+---
+
+## 🐳 Docker & Conteneurs
+
+### 📦 Services définis dans `docker-compose.yml`
+
+* `db` : MariaDB 11.3 (cluster-ready)
+* `backend` : API Node.js + Express
+* `frontend` : Vite.js + React
+* `phpmyadmin` : interface d’administration MariaDB (port 8080)
+
+### 🔒 Variables d’environnement globales (`.env`)
+
+```env
+MYSQL_ROOT_PASSWORD=rootpassword
+MYSQL_DATABASE=reservation_db
+MYSQL_USER=myuser
+MYSQL_PASSWORD=mypassword
+PORT=3000
+```
+
+### 🚀 Lancement complet
+
+```bash
+git clone <url_du_repo>
+cd TP_SOLO_ARCHINTIER
+
+# Lancer les services Docker
+docker-compose up --build
+```
+
+### 🔗 Accès aux services
+
+* Frontend : [http://localhost:5173](http://localhost:5173)
+* Backend : [http://localhost:3000](http://localhost:3000)
+* PhpMyAdmin : [http://localhost:8080](http://localhost:8080)
+
+> Identifiants PhpMyAdmin : root / rootpassword
+
+---
+
+## 🖼️ Fonctionnalités
+
+1. **Connexion utilisateur simple** (username uniquement)
+2. **Vue utilisateur** : liste des événements et bouton "Réserver"
+3. **Vue admin** : création et suppression d’événements
+4. **Stats** : taux de remplissage visible pour chaque événement
 
 ---
 
@@ -106,50 +131,6 @@ TP_SOLO_ARCHINTIER/
 
 ![Diagramme Séquence](./images/schema.png)
 
----
-
-## 🚀 Lancement de l'application
-
-1. **Cloner le dépôt** :
-
-```bash
-git clone <url_du_repo>
-cd TP_SOLO_ARCHINTIER
-```
-
-2. **Configurer les fichiers `.env`** :
-
-   * Créez un fichier `.env` dans `backend/` et `frontend/` avec les variables nécessaires (ports, URL API, secrets JWT, etc.)
-
-3. **Installer les dépendances** :
-
-```bash
-cd backend
-npm install
-cd ../frontend
-npm install
-```
-
-4. **Démarrer le backend** :
-
-```bash
-cd backend
-npm run dev
-```
-
-5. **Démarrer le frontend** :
-
-```bash
-cd frontend
-npm run dev
-```
-
-6. **Accéder à l'application** :
-
-* Frontend : [http://localhost:5173](http://localhost:5173)
-* Backend : [http://localhost:3000](http://localhost:3000)
-
----
 
 ## 📸 Aperçu de l'application
 
